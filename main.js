@@ -37,17 +37,32 @@ const inputWrap = (appendTo, labelText, type, name, validationText) => {
 };
 
 // Function to create remove button
-const removeButton = (appendTo) => {
+const removeButton = (appendTo, value) => {
     const removeButton = document.createElement(`button`);
     removeButton.classList.add(`remove`);
     removeButton.innerHTML = "Remove";
 
     removeButton.addEventListener("click", (e) => {
         e.preventDefault();
-        e.target.parentNode.parentNode.remove();
+        const id = e.target.parentElement.id;
+        const formData = new FormData();
+        formData.append("id", id);
+        console.log(id);
+        fetch("remove.php", {
+            method: "POST",
+            body: formData
+        }).then(res => {
+            e.target.parentElement.parentElement.remove();
+        }).catch(e => {
+            console.log(e)
+        });
     });
 
-    appendTo.append(removeButton);
+    if (value) {
+        appendTo.insertAdjacentElement("beforebegin", removeButton);
+    } else {
+        appendTo.append(removeButton);
+    }
 };
 
 // Creates the form
@@ -135,7 +150,7 @@ class Validator {
 // Form Class
 class Form {
     constructor() {
-        this.formID = "from-";
+        this.formID = "form-";
         this.form = "";
     }
     createForm() {
@@ -149,6 +164,7 @@ document.getElementById("newContact").addEventListener("click", () => {
     const form = new Form();
     form.createForm();
 });
+
 
 
 // Validate all forms
@@ -174,7 +190,8 @@ document.getElementById("submit").addEventListener("click", async() => {
             const dataArray = [i.id, i.name.value, i.phone.value, i.email.value];
             dataToSubmit.push(dataArray);
         });
-        console.log(dataToSubmit)
+
+        console.log(dataToSubmit);
 
         const data = await fetch("main.php", {
             method: "POST",
@@ -204,6 +221,11 @@ document.getElementById("submit").addEventListener("click", async() => {
             });
         } else {
             clearAllErrors();
+            const form1 = document.querySelector("#form-1 hr");
+            let check = document.querySelector("#form-1 .remove") ? true : false;
+            if (!check) {
+                removeButton(form1, true);
+            };
         }
 
     } catch (e) {

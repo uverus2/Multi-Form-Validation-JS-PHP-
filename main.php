@@ -1,8 +1,9 @@
 <?php
 
+
   class Validator {
 
-    public function __construct(string $formID, string $name,int $phone, string $email)
+    public function __construct(string $formID, string $name,string $phone, string $email)
     {
         $this->formID = $formID;
         $this->name = $name;
@@ -34,8 +35,7 @@
     }
 
     private function phone($phone){
-      $checkNumber = "/^\d{10}$/";
-      if(preg_match($checkNumber, $phone)){
+      if(strlen($phone) === 10 && ctype_digit($phone)){
         return;
       }else{
         array_push($this->errors,"phone");
@@ -45,9 +45,7 @@
     private function email($email){
       $checkEmail = "/\S+@\S+\.\S+/";
 
-      if(preg_match($checkEmail, $email)){
-        return;
-      }else{
+      if(!preg_match($checkEmail, $email)){
         array_push($this->errors,"email");
       }
     }
@@ -66,7 +64,7 @@
   $allErrors = array();
   $formObjects = array();
   foreach ($data2 as $value) {
-    $form = new Validator($value[0], $value[1], intval($value[2]), $value[3]);
+    $form = new Validator($value[0], $value[1],$value[2], $value[3]);
     $values = $form->validate();
     $errors = $form->getErrors();
 
