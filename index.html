@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,41 +18,41 @@
                     <h1>Multi Contact Form</h1>
                 </div>
                 <div class="buttonsWrap">
-                    <button>Add Contact</button>
-                    <button>Validate</button>
-                    <button>Save</button>
+                    <button id="newContact">Add Contact</button>
+                    <button id="validate">Validate</button>
+                    <button type="submit" id="submit">Save</button>
                 </div>
             </div>
             <hr/>
-            <form action="">
-                <div class="formSections">
-                    <div class="formSection">
+            <div class="formSections">
+                <div class="formSection">
+                    <form action="" id="form-1" method="POST">
                         <h2>Contact</h2>
                         <hr/>
                         <div class="inputWrap">
                             <label for="">Name</label>
                             <div class="innerInput">
                                 <input type="text" name="name">
-                                <p class="error"> Field is not valid</p>
+                                <p class="error"> Field must have a value</p>
                             </div>
                         </div>
                         <div class="inputWrap">
                             <label for=""> Phone Number </label>
                             <div class="innerInput">
-                                <input type="number" name="number">
-                                <p class="error"> Field is not valid</p>
+                                <input type="number" name="phone">
+                                <p class="error"> Not a valid phone number. It must be 10 digits long</p>
                             </div>
                         </div>
                         <div class="inputWrap">
                             <label for=""> Email </label>
                             <div class="innerInput">
                                 <input type="email" name="email" id="email">
-                                <p class="error"> Field is not valid</p>
+                                <p class="error"> Not a valid email address. Format must be email@yahoo.com</p>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </section>
     <script src="main.js"></script>
